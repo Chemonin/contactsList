@@ -2,6 +2,7 @@ import AbstractElement from './abstract-element.js';
 
 export default class Card extends AbstractElement {
   constructor({name, phone}) {
+    super();
     this._name = name;
     this._phone = phone;
   }
