@@ -2,29 +2,43 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", "Arial", sans-serif;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 21px;
   font-weight: 400;
   color: #00000;
   background-color: #ECEDF0;
+}
+
+.visually-hidden:not(:focus):not(:active),
+input[type="checkbox"].visually-hidden,
+input[type="radio"].visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
 .app-header {
   text-align: center;
 }
 
-.table {
+.table,
+.new-contact {
+  text-align: center;
   margin: 0 auto;
   padding-bottom: -10px;
   width: 800px;
-  border: 1px solid black;
-  min-height: 100px;
 }
 
 .card,
 .card-edit {
   margin-bottom: 10px;
-  border: 1px solid blue;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -32,15 +46,18 @@ body {
 
 .card__info,
 .card-edit__info {
-  border: 1px solid green;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
 }
-.card__controls {
-  border: 1px solid green;
+
+.card__info p {
+  margin: 0;
+  padding: 10px;
 }
+
 .card__controls button,
 .card-edit__controls button {
   padding: 11px;
@@ -60,4 +77,25 @@ body {
   width: 80%;
   margin-left: 10px;
   padding: 11px;
+}
+
+.add-form {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-form input {
+  width: 50%;
+  padding: 11px;
+  margin-bottom: 10px;
+}
+
+.add-form__btn {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 10px;
+  width: 200px;
 }
