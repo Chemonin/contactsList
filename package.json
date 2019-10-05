@@ -1,0 +1,18 @@
+{
+  "name": "UsersList",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Names and phone numbers list",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
+  "devDependencies": {
+    "webpack": "4.39.2",
+    "webpack-cli": "3.3.6",
+    "webpack-dev-server": "3.8.0"
+  },
+  "engines": {
+    "node": "10"
+  }
+}
