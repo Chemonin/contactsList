@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", "Arial", sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #00000;
+  background-color: #ECEDF0;
+}
+
+.app-header {
+  text-align: center;
+}
+
+.table {
+  margin: 0 auto;
+  padding-bottom: -10px;
+  width: 800px;
+  border: 1px solid black;
+  min-height: 100px;
+}
+
+.card,
+.card-edit {
+  margin-bottom: 10px;
+  border: 1px solid blue;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card__info,
+.card-edit__info {
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+.card__controls {
+  border: 1px solid green;
+}
+.card__controls button,
+.card-edit__controls button {
+  padding: 11px;
+  min-width: 100px;
+  display: block;
+}
+
+.card-edit__info label {
+  padding-left: 10px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}
+
+.card-edit__info input {
+  width: 80%;
+  margin-left: 10px;
+  padding: 11px;
+}

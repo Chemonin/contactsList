@@ -1,1 +1,3 @@
-console.log(`hello`);
+import {dataList} from './data.js';
+
+console.dir(dataList);
