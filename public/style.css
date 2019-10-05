@@ -46,6 +46,7 @@ input[type="radio"].visually-hidden {
 
 .card__info,
 .card-edit__info {
+  margin-right: 5px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -66,6 +67,7 @@ input[type="radio"].visually-hidden {
 }
 
 .card-edit__info label {
+  box-sizing: border-box;
   padding-left: 10px;
   align-items: center;
   justify-content: space-between;
@@ -74,6 +76,7 @@ input[type="radio"].visually-hidden {
 }
 
 .card-edit__info input {
+  box-sizing: border-box;
   width: 80%;
   margin-left: 10px;
   padding: 11px;

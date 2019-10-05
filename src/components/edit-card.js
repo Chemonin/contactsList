@@ -14,7 +14,7 @@ export default class EditCard extends AbstractElement {
         <label>Phone<input class='card-edit__phone' type='text' name='phone' value='${this._phone}'></label>
       </div>
       <div class='card-edit__controls'>
-        <button class='card-edit__delete-btn' type="reset">Delete</button>
+        
         <button class='card-edit__save-btn' type='submit'>Save</button>
       </div>
     </form>`
