@@ -10,6 +10,10 @@ export default class ListController {
     this._watchers = [];
   }
 
+  createContact(entryData) {
+    this._onDataChange(entryData, null);
+  }
+
   _renderList(contactsInfo) {
     this._container.innerHTML = ``;
     this._dataList.forEach((element) => this._renderContact(element));
@@ -21,7 +25,13 @@ export default class ListController {
   }
   _onDataChange(newData, oldData) {
     const index = this._dataList.findIndex((item) => item === oldData);
-    this._dataList[index] = newData;
+    if (newData === null) {
+      this._dataList.splice(index, 1);
+    } else if (oldData === null) {
+      this._dataList.unshift(newData);
+    } else {
+      this._dataList[index] = newData;
+    }
     this._renderList(this._dataList);
   }
 

@@ -18,6 +18,10 @@ export default class CardController {
       this._container.replaceChild(this._editCard.getElement(), this._card.getElement());
       this._onChangeView();
     });
+
+    this._card.getElement().querySelector(`.card__delete-btn`).addEventListener(`click`, () => {
+      this._onDataChange(null, this._data);
+    });
     this._editCard.getElement().addEventListener(`submit`, (evt) => {
       evt.preventDefault();
       const formData = new FormData(this._editCard.getElement());
@@ -25,7 +29,6 @@ export default class CardController {
         name: formData.get(`name`),
         phone: formData.get(`phone`),
       };
-      console.log(changes);
       this._onDataChange(changes, this._data);
     });
 
@@ -33,7 +36,6 @@ export default class CardController {
   }
 
   disableChange() {
-    // debugger;
     const deleteBtn = this._card.getElement().querySelector(`.card__delete-btn`);
     const editBtn = this._card.getElement().querySelector(`.card__edit-btn`);
     editBtn.setAttribute(`disabled`, true);
