@@ -1,15 +1,28 @@
 import {dataList} from './data.js';
-import {Position, render} from './utils.js';
+import {Position, render, download} from './utils.js';
 import ContactCreator from './components/contactCreator.js';
 import ListController from './controllers/list-controller.js';
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
 const form = new ContactCreator();
+let listController = null;
 
+const useLocalData = () => {
+  listController = new ListController(table, dataList);
+  listController.init();
+  window.alert('local data used');
+}
+
+const renderContacts = (data) => {
+  window.alert('server data used');
+  listController = new ListController(table, data);
+  listController.init();
+}
 render(newContact, form.getElement(), Position.BEFOREEND);
-const listController = new ListController(table, dataList);
-listController.init();
+download(renderContacts, useLocalData);
+// const listController = new ListController(table, dataList);
+// listController.init();
 
 form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
