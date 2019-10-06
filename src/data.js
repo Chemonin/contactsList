@@ -1,8 +1,4 @@
 const NUMBER_OF_CARD = 5;
-export const Server = {
-  URL_GET: `https://httpbin.org/status/500`,
-  URL_POST: `##`
-}
 
 const names = [`Ivan`, `Petr`, `Oleg`, `Dmitriy`, `Alexander`];
 const phones = [`89853332211`, `89034234300`, `+79301234567`, `89109019234`];

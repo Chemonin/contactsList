@@ -11,18 +11,16 @@ let listController = null;
 const useLocalData = () => {
   listController = new ListController(table, dataList);
   listController.init();
-  window.alert('local data used');
+  window.alert('Conection error. Local data used');
 }
 
 const renderContacts = (data) => {
-  window.alert('server data used');
+  window.alert('Server data used');
   listController = new ListController(table, data);
   listController.init();
 }
 render(newContact, form.getElement(), Position.BEFOREEND);
 download(renderContacts, useLocalData);
-// const listController = new ListController(table, dataList);
-// listController.init();
 
 form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');

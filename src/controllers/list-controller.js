@@ -1,5 +1,5 @@
 import CardController from './card-controller.js';
-import {Position, render} from '../utils.js';
+import {Position, render, upload} from '../utils.js';
 
 export default class ListController {
   constructor(container, dataList) {
@@ -23,8 +23,25 @@ export default class ListController {
       const cardController = new CardController(this._container, contactData, this._onDataChange, this._onChangeView);
       this._watchers.push(cardController.disableChange.bind(cardController));
   }
+
+  _onSendError() {
+    window.alert(`Conection error. Local data updated`);
+    this._renderList(this._dataList);
+  }
+
+  _onSendSuccess() {
+    window.alert(`Server data updated`);
+    this._renderList(this._dataList);
+  }
+
   _onDataChange(newData, oldData) {
-    const index = this._dataList.findIndex((item) => item === oldData);
+    let index = null;
+    if (!this._dataList) {
+      this._dataList = [];
+    }
+    if (this._dataList.length !== 0) {
+      index = this._dataList.findIndex((item) => item === oldData);
+    }
     if (newData === null) {
       this._dataList.splice(index, 1);
     } else if (oldData === null) {
@@ -32,7 +49,7 @@ export default class ListController {
     } else {
       this._dataList[index] = newData;
     }
-    this._renderList(this._dataList);
+    upload(this._onSendSuccess.bind(this), this._onSendError.bind(this), this._dataList);
   }
 
   _onChangeView() {
@@ -40,6 +57,8 @@ export default class ListController {
   }
 
   init() {
-    this._dataList.forEach((element) => this._renderContact(element));
+    if (this._dataList) {
+      this._dataList.forEach((element) => this._renderContact(element));
+    }
   }
 }
