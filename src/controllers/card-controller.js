@@ -31,6 +31,22 @@ export default class CardController {
       };
       this._onDataChange(changes, this._data);
     });
+    this._editCard.getElement().querySelector(`.card-edit__name`).addEventListener(`change`, (evt) => {
+      const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
+      if(!re.test(evt.currentTarget.value)) {
+        evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
+      } else {
+        evt.currentTarget.setCustomValidity(``);
+      }
+    });
+    this._editCard.getElement().querySelector(`.card-edit__phone`).addEventListener(`change`, (evt) => {
+      const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
+      if(!re.test(evt.currentTarget.value)) {
+        evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
+      } else {
+        evt.currentTarget.setCustomValidity(``);
+      }
+    });
 
     render(this._container, this._card.getElement(), Position.BEFOREEND);
   }

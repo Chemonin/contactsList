@@ -6,18 +6,27 @@ const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
 const form = new ContactCreator();
-// const entrys = Array.from(form.getElement().querySelectorAll(`input`));
-// console.log(entrys);
-// entrys.forEach((element) => {
-//   element.addEventListener(`focus`, () => {
-//     console.log(`hello`);
-//     form.getElement().querySelector(`.add-form__btn`).removeAttribute(`disabled`);
-//   });
-// });
 
 render(newContact, form.getElement(), Position.BEFOREEND);
 const listController = new ListController(table, dataList);
 listController.init();
+
+form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
+  const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
+  if(!re.test(evt.currentTarget.value)) {
+    evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
+  } else {
+    evt.currentTarget.setCustomValidity(``);
+  }
+});
+form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
+  const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
+  if(!re.test(evt.currentTarget.value)) {
+    evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
+  } else {
+    evt.currentTarget.setCustomValidity(``);
+  }
+});
 
 form.getElement().addEventListener(`submit`, (evt) => {
   evt.preventDefault();
@@ -26,7 +35,6 @@ form.getElement().addEventListener(`submit`, (evt) => {
     name: formData.get(`new-name`),
     phone: formData.get(`new-phone`),
   };
-  console.log(entry);
   form.getElement().reset();
   listController.createContact(entry);
 });
