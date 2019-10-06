@@ -19,9 +19,3 @@ export const render = (parent, child, position) => {
       break;
   }
 };
-
-export const unrender = (element) => {
-  if (element) {
-    element.remove();
-  }
-};
