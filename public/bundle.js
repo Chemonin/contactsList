@@ -358,7 +358,7 @@ class ListController {
   _onDataChange(newData, oldData) {
     let index = null;
     if (!this._dataList) {
-      this._dataList = [];
+      this._dataList = []; // Необходимо при включении имитации режима работы с сервером. 
     }
     if (this._dataList.length !== 0) {
       index = this._dataList.findIndex((item) => item === oldData);
@@ -432,6 +432,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
@@ -443,7 +444,6 @@ const useLocalData = () => {
   listController.init();
   window.alert('Conection error. Local data used');
 }
-
 const renderContacts = (data) => {
   window.alert('Server data used');
   listController = new _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_3__["default"](table, data);
@@ -453,6 +453,7 @@ Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["render"])(newContact, form.getEle
 Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["download"])(renderContacts, useLocalData);
 
 form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
+  // вводитться только имя или фамилия целиком или через дефис(например, в случае двойного)
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
@@ -461,7 +462,7 @@ form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) =>
   }
 });
 form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
-  const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
+  const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi'); // условие без учета длины номера
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
   } else {
@@ -498,7 +499,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return createElement; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 const TIMEOUT_VALUE = 5000;
-// URL - адрес заглушка для получения ответа от сервера.
+// URL - адрес заглушка для имитации работы с сервером.
 // при замене значения 500 на 200 в URL данные будут загружаться с сервера
 const URL = `https://httpbin.org/status/500`;
 var LoadStatus = {
