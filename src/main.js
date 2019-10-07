@@ -2,6 +2,7 @@ import {dataList} from './data.js';
 import {Position, render, download} from './utils.js';
 import ContactCreator from './components/contactCreator.js';
 import ListController from './controllers/list-controller.js';
+
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
@@ -13,7 +14,6 @@ const useLocalData = () => {
   listController.init();
   window.alert('Conection error. Local data used');
 }
-
 const renderContacts = (data) => {
   window.alert('Server data used');
   listController = new ListController(table, data);
@@ -23,6 +23,7 @@ render(newContact, form.getElement(), Position.BEFOREEND);
 download(renderContacts, useLocalData);
 
 form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
+  // вводитться только имя или фамилия целиком или через дефис(например, в случае двойного)
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
@@ -31,7 +32,7 @@ form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) =>
   }
 });
 form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
-  const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
+  const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi'); // условие без учета длины номера
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
   } else {

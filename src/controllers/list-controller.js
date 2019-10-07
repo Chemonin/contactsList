@@ -37,7 +37,7 @@ export default class ListController {
   _onDataChange(newData, oldData) {
     let index = null;
     if (!this._dataList) {
-      this._dataList = [];
+      this._dataList = []; // Необходимо при включении имитации режима работы с сервером. 
     }
     if (this._dataList.length !== 0) {
       index = this._dataList.findIndex((item) => item === oldData);
