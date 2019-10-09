@@ -1,5 +1,5 @@
 import CardController from './card-controller.js';
-import {Position, render, upload} from '../utils.js';
+import {render, upload} from '../utils.js';
 
 export default class ListController {
   constructor(container, dataList) {
@@ -37,7 +37,7 @@ export default class ListController {
   _onDataChange(newData, oldData) {
     let index = null;
     if (!this._dataList) {
-      this._dataList = []; // Необходимо при включении имитации режима работы с сервером. 
+      this._dataList = []; // Необходимо при включении имитации режима работы с сервером.
     }
     if (this._dataList.length !== 0) {
       index = this._dataList.findIndex((item) => item === oldData);

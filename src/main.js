@@ -6,7 +6,7 @@ import ListController from './controllers/list-controller.js';
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
-const form = new ContactCreator();
+const form = new ContactCreator().renderForm();
 let listController = null;
 
 const useLocalData = () => {
@@ -19,10 +19,10 @@ const renderContacts = (data) => {
   listController = new ListController(table, data);
   listController.init();
 }
-render(newContact, form.getElement(), Position.BEFOREEND);
+render(newContact, form, Position.BEFOREEND);
 download(renderContacts, useLocalData);
 
-form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
+form.querySelector(`#new-name`).addEventListener(`change`, (evt) => {
   // вводитться только имя или фамилия целиком или через дефис(например, в случае двойного)
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
   if(!re.test(evt.currentTarget.value)) {
@@ -31,7 +31,7 @@ form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) =>
     evt.currentTarget.setCustomValidity(``);
   }
 });
-form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
+form.querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
   const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi'); // условие без учета длины номера
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
@@ -40,13 +40,13 @@ form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) =
   }
 });
 
-form.getElement().addEventListener(`submit`, (evt) => {
+form.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  const formData = new FormData(form.getElement());
+  const formData = new FormData(form);
   const entry = {
     name: formData.get(`new-name`),
     phone: formData.get(`new-phone`),
   };
-  form.getElement().reset();
+  form.reset();
   listController.createContact(entry);
 });

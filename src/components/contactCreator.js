@@ -1,7 +1,11 @@
-import AbstractElement from './abstract-element.js';
+export default class ContactCreator {
+  renderForm() {
+    const shell = document.createElement(`div`);
+    shell.innerHTML = this._getTemplate();
+    return shell.firstChild;
+  }
 
-export default class ContactCreator extends AbstractElement {
-  getTemplate() {
+  _getTemplate() {
     return `<form class='add-form' method='post'>
       <label class='visually-hidden' for='new-name'>Name</label>
       <input type='text' id='new-name' name='new-name' placeholder='enter name' required>

@@ -14,8 +14,6 @@ export default class CardController {
   }
 
   create() {
-    const card = this._card.renderCardView();
-    const cardEdit = this._card.renderEditView();
     this._cardView.querySelector(`.card__edit-btn`).addEventListener(`click`, () => {
       this._container.replaceChild(this._cardEdit, this._cardView);
       this._onChangeView();
