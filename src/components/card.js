@@ -1,8 +1,8 @@
-import AbstractElement from './abstract-element.js';
+// import AbstractElement from './abstract-element.js';
 
-export default class Card extends AbstractElement {
+export default class Card {
   constructor({name, phone}) {
-    super();
+    // super();
     this._name = name;
     this._phone = phone;
   }

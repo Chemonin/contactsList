@@ -1,5 +1,4 @@
 import Card from '../components/card.js';
-import EditCard from '../components/edit-card.js';
 import {Position, render} from '../utils.js';
 
 export default class CardController {
@@ -9,29 +8,32 @@ export default class CardController {
     this._card = new Card(data);
     this._onChangeView = onChangeView;
     this._onDataChange = onDataChange;
-    this._editCard = new EditCard(data);
+    this._cardView = this._card.renderCardView();
+    this._cardEdit = this._card.renderEditView();
     this.create();
   }
 
   create() {
-    this._card.getElement().querySelector(`.card__edit-btn`).addEventListener(`click`, () => {
-      this._container.replaceChild(this._editCard.getElement(), this._card.getElement());
+    const card = this._card.renderCardView();
+    const cardEdit = this._card.renderEditView();
+    this._cardView.querySelector(`.card__edit-btn`).addEventListener(`click`, () => {
+      this._container.replaceChild(this._cardEdit, this._cardView);
       this._onChangeView();
     });
 
-    this._card.getElement().querySelector(`.card__delete-btn`).addEventListener(`click`, () => {
+    this._cardView.querySelector(`.card__delete-btn`).addEventListener(`click`, () => {
       this._onDataChange(null, this._data);
     });
-    this._editCard.getElement().addEventListener(`submit`, (evt) => {
+    this._cardEdit.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
-      const formData = new FormData(this._editCard.getElement());
+      const formData = new FormData(this._cardEdit);
       const changes = {
         name: formData.get(`name`),
         phone: formData.get(`phone`),
       };
       this._onDataChange(changes, this._data);
     });
-    this._editCard.getElement().querySelector(`.card-edit__name`).addEventListener(`change`, (evt) => {
+    this._cardEdit.querySelector(`.card-edit__name`).addEventListener(`change`, (evt) => {
       const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
       if(!re.test(evt.currentTarget.value)) {
         evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
@@ -39,7 +41,7 @@ export default class CardController {
         evt.currentTarget.setCustomValidity(``);
       }
     });
-    this._editCard.getElement().querySelector(`.card-edit__phone`).addEventListener(`change`, (evt) => {
+    this._cardEdit.querySelector(`.card-edit__phone`).addEventListener(`change`, (evt) => {
       const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
       if(!re.test(evt.currentTarget.value)) {
         evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
@@ -48,12 +50,12 @@ export default class CardController {
       }
     });
 
-    render(this._container, this._card.getElement(), Position.BEFOREEND);
+    render(this._container, this._cardView, Position.BEFOREEND);
   }
 
   disableChange() {
-    const deleteBtn = this._card.getElement().querySelector(`.card__delete-btn`);
-    const editBtn = this._card.getElement().querySelector(`.card__edit-btn`);
+    const deleteBtn = this._cardView.querySelector(`.card__delete-btn`);
+    const editBtn = this._cardView.querySelector(`.card__edit-btn`);
     editBtn.setAttribute(`disabled`, true);
     deleteBtn.setAttribute(`disabled`, true);
   }
