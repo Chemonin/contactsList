@@ -1,5 +1,4 @@
 import Card from '../components/card.js';
-import {Position, render} from '../utils.js';
 
 export default class CardController {
   constructor(container, data, onDataChange, onChangeView) {
@@ -48,7 +47,7 @@ export default class CardController {
       }
     });
 
-    render(this._container, this._cardView, Position.BEFOREEND);
+    this._container.appendChild(this._cardView);
   }
 
   disableChange() {

@@ -1,5 +1,5 @@
 import CardController from './card-controller.js';
-import {render, upload} from '../utils.js';
+import {upload} from '../utils.js';
 
 export default class ListController {
   constructor(container, dataList) {

@@ -1,12 +1,11 @@
 import {dataList} from './data.js';
-import {Position, render, download} from './utils.js';
-import ContactCreator from './components/contactCreator.js';
+import {download} from './utils.js';
 import ListController from './controllers/list-controller.js';
 
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
-const form = new ContactCreator().renderForm();
+const form = document.querySelector(`.add-form`);
 let listController = null;
 
 const useLocalData = () => {
@@ -19,7 +18,7 @@ const renderContacts = (data) => {
   listController = new ListController(table, data);
   listController.init();
 }
-render(newContact, form, Position.BEFOREEND);
+newContact.appendChild(form);
 download(renderContacts, useLocalData);
 
 form.querySelector(`#new-name`).addEventListener(`change`, (evt) => {
