@@ -86,145 +86,37 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/components/abstract-element.js":
-/*!********************************************!*\
-  !*** ./src/components/abstract-element.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AbstractElement; });
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils.js */ "./src/utils.js");
-
-
-class AbstractElement {
-  constructor() {
-    if (new.target === AbstractElement) {
-      throw new Error(`Can't instantiate AbstractComponent, only concrete one.`);
-    }
-    this._element = 0;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createElement"])(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
-    return this._element;
-  }
-
-  getTemplate() {
-    throw Error(`Abstract method not implemented: getTemplate`);
-  }
-}
-
-
-/***/ }),
-
 /***/ "./src/components/card.js":
 /*!********************************!*\
   !*** ./src/components/card.js ***!
   \********************************/
-/*! exports provided: default */
+/*! exports provided: getCardElement */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Card; });
-/* harmony import */ var _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./abstract-element.js */ "./src/components/abstract-element.js");
-
-
-class Card extends _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor({name, phone}) {
-    super();
-    this._name = name;
-    this._phone = phone;
-  }
-
-  getTemplate() {
-    return `<article class='card'>
-      <div class='card__info'>
-        <p class='card__name'>${this._name}</p>
-        <p class='card__phone'>${this._phone}</p>
-      </div>
-      <div class='card__controls'>
-        <button class='card__delete-btn' type="reset">Delete</button>
-        <button class='card__edit-btn' type='button'>Edit</button>
-      </div>
-    </article>`
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/components/contactCreator.js":
-/*!******************************************!*\
-  !*** ./src/components/contactCreator.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ContactCreator; });
-/* harmony import */ var _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./abstract-element.js */ "./src/components/abstract-element.js");
-
-
-class ContactCreator extends _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  getTemplate() {
-    return `<form class='add-form' method='post'>
-      <label class='visually-hidden' for='new-name'>Name</label>
-      <input type='text' id='new-name' name='new-name' placeholder='enter name' required>
-      <label class='visually-hidden' for='new-phone'>Phone</label>
-      <input type='text' id='new-phone' name='new-phone' placeholder='enter phone +7xxxxxxxxxx or 8xxxxxxxxxx' required>
-      <button class='add-form__btn' type='submit'>Create</button>
-    </form>`;
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/components/edit-card.js":
-/*!*************************************!*\
-  !*** ./src/components/edit-card.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditCard; });
-/* harmony import */ var _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./abstract-element.js */ "./src/components/abstract-element.js");
-
-
-class EditCard extends _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor({name, phone}) {
-    super();
-    this._name = name;
-    this._phone = phone;
-  }
-
-  getTemplate() {
-    return `<form class='card-edit' method='post'>
-      <div class='card-edit__info'>
-        <label>Name<input class='card-edit__name' type='text' name='name' value='${this._name}' ></label>
-        <label>Phone<input class='card-edit__phone' type='text' name='phone' value='${this._phone}' ></label>
-      </div>
-      <div class='card-edit__controls'>
-        <button class='card-edit__save-btn' type='submit'>Save</button>
-      </div>
-    </form>`
-  }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCardElement", function() { return getCardElement; });
+const getCardElement = function ({name, phone}, editState) {
+  const shell = document.createElement(`div`);
+  shell.innerHTML = editState ? `<form class='card-edit' method='post'>
+    <div class='card-edit__info'>
+      <label>Name<input class='card-edit__name' type='text' name='name' value='${name}' ></label>
+      <label>Phone<input class='card-edit__phone' type='text' name='phone' value='${phone}' ></label>
+    </div>
+    <div class='card-edit__controls'>
+      <button class='card-edit__save-btn' type='submit'>Save</button>
+    </div>
+  </form>` : `<article class='card'>
+    <div class='card__info'>
+      <p class='card__name'>${name}</p>
+      <p class='card__phone'>${phone}</p>
+    </div>
+    <div class='card__controls'>
+      <button class='card__delete-btn' type="reset">Delete</button>
+      <button class='card__edit-btn' type='button'>Edit</button>
+    </div>
+  </article>`;
+  return shell.firstChild;
 }
 
 
@@ -241,42 +133,39 @@ class EditCard extends _abstract_element_js__WEBPACK_IMPORTED_MODULE_0__["defaul
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CardController; });
 /* harmony import */ var _components_card_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/card.js */ "./src/components/card.js");
-/* harmony import */ var _components_edit_card_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/edit-card.js */ "./src/components/edit-card.js");
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils.js */ "./src/utils.js");
-
-
 
 
 class CardController {
   constructor(container, data, onDataChange, onChangeView) {
     this._data = data;
     this._container = container;
-    this._card = new _components_card_js__WEBPACK_IMPORTED_MODULE_0__["default"](data);
+    this._cardEditFlag = true;
     this._onChangeView = onChangeView;
     this._onDataChange = onDataChange;
-    this._editCard = new _components_edit_card_js__WEBPACK_IMPORTED_MODULE_1__["default"](data);
+    this._cardView = Object(_components_card_js__WEBPACK_IMPORTED_MODULE_0__["getCardElement"])(data, !this._cardEditFlag);
+    this._cardEdit = Object(_components_card_js__WEBPACK_IMPORTED_MODULE_0__["getCardElement"])(data, this._cardEditFlag);
     this.create();
   }
 
   create() {
-    this._card.getElement().querySelector(`.card__edit-btn`).addEventListener(`click`, () => {
-      this._container.replaceChild(this._editCard.getElement(), this._card.getElement());
+    this._cardView.querySelector(`.card__edit-btn`).addEventListener(`click`, () => {
+      this._container.replaceChild(this._cardEdit, this._cardView);
       this._onChangeView();
     });
 
-    this._card.getElement().querySelector(`.card__delete-btn`).addEventListener(`click`, () => {
+    this._cardView.querySelector(`.card__delete-btn`).addEventListener(`click`, () => {
       this._onDataChange(null, this._data);
     });
-    this._editCard.getElement().addEventListener(`submit`, (evt) => {
+    this._cardEdit.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
-      const formData = new FormData(this._editCard.getElement());
+      const formData = new FormData(this._cardEdit);
       const changes = {
         name: formData.get(`name`),
         phone: formData.get(`phone`),
       };
       this._onDataChange(changes, this._data);
     });
-    this._editCard.getElement().querySelector(`.card-edit__name`).addEventListener(`change`, (evt) => {
+    this._cardEdit.querySelector(`.card-edit__name`).addEventListener(`change`, (evt) => {
       const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
       if(!re.test(evt.currentTarget.value)) {
         evt.currentTarget.setCustomValidity(`Please enter a name in Russian or English. Min length 2 symbols`);
@@ -284,7 +173,7 @@ class CardController {
         evt.currentTarget.setCustomValidity(``);
       }
     });
-    this._editCard.getElement().querySelector(`.card-edit__phone`).addEventListener(`change`, (evt) => {
+    this._cardEdit.querySelector(`.card-edit__phone`).addEventListener(`change`, (evt) => {
       const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi');
       if(!re.test(evt.currentTarget.value)) {
         evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
@@ -293,12 +182,12 @@ class CardController {
       }
     });
 
-    Object(_utils_js__WEBPACK_IMPORTED_MODULE_2__["render"])(this._container, this._card.getElement(), _utils_js__WEBPACK_IMPORTED_MODULE_2__["Position"].BEFOREEND);
+    this._container.appendChild(this._cardView);
   }
 
   disableChange() {
-    const deleteBtn = this._card.getElement().querySelector(`.card__delete-btn`);
-    const editBtn = this._card.getElement().querySelector(`.card__edit-btn`);
+    const deleteBtn = this._cardView.querySelector(`.card__delete-btn`);
+    const editBtn = this._cardView.querySelector(`.card__edit-btn`);
     editBtn.setAttribute(`disabled`, true);
     deleteBtn.setAttribute(`disabled`, true);
   }
@@ -358,7 +247,7 @@ class ListController {
   _onDataChange(newData, oldData) {
     let index = null;
     if (!this._dataList) {
-      this._dataList = []; // Необходимо при включении имитации режима работы с сервером. 
+      this._dataList = []; // Необходимо при включении имитации режима работы с сервером.
     }
     if (this._dataList.length !== 0) {
       index = this._dataList.findIndex((item) => item === oldData);
@@ -426,9 +315,7 @@ const dataList = getDataList(NUMBER_OF_CARD);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data.js */ "./src/data.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
-/* harmony import */ var _components_contactCreator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/contactCreator.js */ "./src/components/contactCreator.js");
-/* harmony import */ var _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./controllers/list-controller.js */ "./src/controllers/list-controller.js");
-
+/* harmony import */ var _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controllers/list-controller.js */ "./src/controllers/list-controller.js");
 
 
 
@@ -436,23 +323,23 @@ __webpack_require__.r(__webpack_exports__);
 const container = document.querySelector(`.container`);
 const table = document.querySelector(`.table`);
 const newContact = document.querySelector(`.new-contact`);
-const form = new _components_contactCreator_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const form = document.querySelector(`.add-form`);
 let listController = null;
 
 const useLocalData = () => {
-  listController = new _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_3__["default"](table, _data_js__WEBPACK_IMPORTED_MODULE_0__["dataList"]);
+  listController = new _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_2__["default"](table, _data_js__WEBPACK_IMPORTED_MODULE_0__["dataList"]);
   listController.init();
   window.alert('Conection error. Local data used');
 }
 const renderContacts = (data) => {
   window.alert('Server data used');
-  listController = new _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_3__["default"](table, data);
+  listController = new _controllers_list_controller_js__WEBPACK_IMPORTED_MODULE_2__["default"](table, data);
   listController.init();
 }
-Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["render"])(newContact, form.getElement(), _utils_js__WEBPACK_IMPORTED_MODULE_1__["Position"].BEFOREEND);
+newContact.appendChild(form);
 Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["download"])(renderContacts, useLocalData);
 
-form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) => {
+form.querySelector(`#new-name`).addEventListener(`change`, (evt) => {
   // вводитться только имя или фамилия целиком или через дефис(например, в случае двойного)
   const re = new RegExp('^([\u0400-\u04FFa-zA-Z\-]){2,}$', 'gi');
   if(!re.test(evt.currentTarget.value)) {
@@ -461,7 +348,7 @@ form.getElement().querySelector(`#new-name`).addEventListener(`change`, (evt) =>
     evt.currentTarget.setCustomValidity(``);
   }
 });
-form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
+form.querySelector(`#new-phone`).addEventListener(`change`, (evt) => {
   const re = new RegExp('^[\+]?([0-9\-]){2,}$', 'gi'); // условие без учета длины номера
   if(!re.test(evt.currentTarget.value)) {
     evt.currentTarget.setCustomValidity(`number format: +Xnumber or 8number`);
@@ -470,14 +357,14 @@ form.getElement().querySelector(`#new-phone`).addEventListener(`change`, (evt) =
   }
 });
 
-form.getElement().addEventListener(`submit`, (evt) => {
+form.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  const formData = new FormData(form.getElement());
+  const formData = new FormData(form);
   const entry = {
     name: formData.get(`new-name`),
     phone: formData.get(`new-phone`),
   };
-  form.getElement().reset();
+  form.reset();
   listController.createContact(entry);
 });
 
@@ -488,16 +375,13 @@ form.getElement().addEventListener(`submit`, (evt) => {
 /*!**********************!*\
   !*** ./src/utils.js ***!
   \**********************/
-/*! exports provided: Position, download, upload, createElement, render */
+/*! exports provided: download, upload */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Position", function() { return Position; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "download", function() { return download; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "upload", function() { return upload; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return createElement; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 const TIMEOUT_VALUE = 5000;
 // URL - адрес заглушка для имитации работы с сервером.
 // при замене значения 500 на 200 в URL данные будут загружаться с сервера
@@ -505,11 +389,6 @@ const URL = `https://httpbin.org/status/500`;
 var LoadStatus = {
     OK: 200
   };
-
-const Position = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`,
-};
 
 const download = (onSuccess, onError) => {
   const xhr = new XMLHttpRequest();
@@ -552,23 +431,6 @@ const upload = (onSuccess, onError, data) => {
   xhr.timeout = TIMEOUT_VALUE;
   xhr.open(`POST`, URL);
   xhr.send(data);
-};
-
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstChild;
-};
-
-const render = (parent, child, position) => {
-  switch (position) {
-    case Position.AFTERBEGIN:
-      parent.prepend(child);
-      break;
-    case Position.BEFOREEND:
-      parent.append(child);
-      break;
-  }
 };
 
 
