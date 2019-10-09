@@ -1,14 +1,14 @@
-import Card from '../components/card.js';
+import {getCardElement} from '../components/card.js';
 
 export default class CardController {
   constructor(container, data, onDataChange, onChangeView) {
     this._data = data;
     this._container = container;
-    this._card = new Card(data);
+    this._cardEditFlag = true;
     this._onChangeView = onChangeView;
     this._onDataChange = onDataChange;
-    this._cardView = this._card.renderCardView();
-    this._cardEdit = this._card.renderEditView();
+    this._cardView = getCardElement(data, !this._cardEditFlag);
+    this._cardEdit = getCardElement(data, this._cardEditFlag);
     this.create();
   }
 
